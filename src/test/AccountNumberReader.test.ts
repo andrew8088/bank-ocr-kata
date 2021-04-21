@@ -7,4 +7,11 @@ describe("Account Number Reader", () => {
     const output = reader.read(filepath);
     expect(output).toEqual(["line1", "line2", "line3", "line4", ""]);
   });
+
+  it("should throw an error if the file does not exist", () => {
+    expect(() => {
+      const reader = new AccountNumberReader();
+      const output = reader.read("no-file-exists");
+    }).toThrow("ENOENT: no such file or directory, open 'no-file-exists'");
+  });
 });
