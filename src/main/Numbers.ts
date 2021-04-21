@@ -1,16 +1,29 @@
 import AccountNumberInput from "./AccountNumberInput";
 
-const NUMBERS: { [key: string]: AccountNumberInput } = {
-  0: [" _ ", "| |", "|_|", ""],
-  1: ["   ", "  |", "  |", ""],
-  2: [" _ ", " _|", "|_ ", ""],
-  3: [" _ ", " _|", " _|", ""],
-  4: ["   ", "|_|", "  |", ""],
-  5: [" _ ", "|_ ", " _|", ""],
-  6: [" _ ", "|_ ", "|_|", ""],
-  7: [" _ ", "  |", "  |", ""],
-  8: [" _ ", "|_|", "|_|", ""],
-  9: [" _", "|_|", " _|", ""],
-};
+class Numbers {
+  public static readonly 0: AccountNumberInput = [" _ ", "| |", "|_|", ""];
+  public static readonly 1: AccountNumberInput = ["   ", "  |", "  |", ""];
+  public static readonly 2: AccountNumberInput = [" _ ", " _|", "|_ ", ""];
+  public static readonly 3: AccountNumberInput = [" _ ", " _|", " _|", ""];
+  public static readonly 4: AccountNumberInput = ["   ", "|_|", "  |", ""];
+  public static readonly 5: AccountNumberInput = [" _ ", "|_ ", " _|", ""];
+  public static readonly 6: AccountNumberInput = [" _ ", "|_ ", "|_|", ""];
+  public static readonly 7: AccountNumberInput = [" _ ", "  |", "  |", ""];
+  public static readonly 8: AccountNumberInput = [" _ ", "|_|", "|_|", ""];
+  public static readonly 9: AccountNumberInput = [" _", "|_|", " _|", ""];
 
-export default NUMBERS;
+  static concat(
+    head: AccountNumberInput,
+    ...rest: AccountNumberInput[]
+  ): AccountNumberInput {
+    return head.map(
+      (str, idx) => str + rest.map((arr) => arr[idx]).join("")
+    ) as AccountNumberInput;
+  }
+
+  static print(input: AccountNumberInput) {
+    console.log(input.join("\n"));
+  }
+}
+
+export default Numbers;
