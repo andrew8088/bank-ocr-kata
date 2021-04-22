@@ -1,3 +1,3 @@
-type AccountNumberInput = [string, string, string, string];
+type AccountNumberInput = [string, string, string];
 
 export default AccountNumberInput;

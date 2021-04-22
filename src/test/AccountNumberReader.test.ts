@@ -5,7 +5,7 @@ describe("Account Number Reader", () => {
     const filepath = "./src/test/test-inputs/1.txt";
     const reader = new AccountNumberReader();
     const output = reader.read(filepath);
-    expect(output).toEqual(["line1", "line2", "line3", "line4", ""]);
+    expect(output).toEqual(["line1", "line2", "line3"]);
   });
 
   it("should throw an error if the file does not exist", () => {
