@@ -3,19 +3,19 @@ import * as R from "ramda";
 import Numbers from "./Numbers";
 
 export default class AccountNumberParser {
-  parse(input: AccountNumberInput): number {
+  parse(input: AccountNumberInput): string {
     const inputDigits = this.separate(input);
     let accountNumber = "";
 
     for (const inputDigit of inputDigits) {
-      for (let num of Object.keys(Numbers)) {
-        if (R.equals(inputDigit, Numbers[num])) {
-          accountNumber += num;
-        }
-      }
+      const num = Object.keys(Numbers).filter((num) =>
+        R.equals(inputDigit, Numbers[num])
+      )[0];
+
+      accountNumber += num || "?";
     }
 
-    return parseInt(accountNumber, 10);
+    return accountNumber;
   }
 
   separate(input: AccountNumberInput): AccountNumberInput[] {

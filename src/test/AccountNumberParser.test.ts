@@ -4,19 +4,19 @@ import Numbers from "../main/Numbers";
 
 describe("AccountNumberParser", () => {
   it.each([
-    [0, Numbers["0"]],
-    [1, Numbers["1"]],
-    [2, Numbers["2"]],
-    [3, Numbers["3"]],
-    [4, Numbers["4"]],
-    [5, Numbers["5"]],
-    [6, Numbers["6"]],
-    [7, Numbers["7"]],
-    [8, Numbers["8"]],
-    [9, Numbers["9"]],
+    ["0", Numbers["0"]],
+    ["1", Numbers["1"]],
+    ["2", Numbers["2"]],
+    ["3", Numbers["3"]],
+    ["4", Numbers["4"]],
+    ["5", Numbers["5"]],
+    ["6", Numbers["6"]],
+    ["7", Numbers["7"]],
+    ["8", Numbers["8"]],
+    ["9", Numbers["9"]],
   ])(
     "should parse an individual %s",
-    (output: number, input: AccountNumberInput) => {
+    (output: string, input: AccountNumberInput) => {
       const parser = new AccountNumberParser();
       expect(parser.parse(input)).toBe(output);
     }
@@ -40,7 +40,7 @@ describe("AccountNumberParser", () => {
 
   it.each([
     [
-      1234567890,
+      "1234567890",
       Numbers.concat([
         Numbers["1"],
         Numbers["2"],
@@ -55,7 +55,7 @@ describe("AccountNumberParser", () => {
       ]),
     ],
     [
-      9087654321,
+      "9087654321",
       Numbers.concat([
         Numbers["9"],
         Numbers["0"],
@@ -71,9 +71,28 @@ describe("AccountNumberParser", () => {
     ],
   ])(
     "should parse a nine digit account number (%s))",
-    (output: number, input: AccountNumberInput) => {
+    (output: string, input: AccountNumberInput) => {
       const parser = new AccountNumberParser();
       expect(parser.parse(input)).toBe(output);
+    }
+  );
+
+  it('should parse illegible digits as "?"', () => {
+    const parser = new AccountNumberParser();
+    expect(parser.parse(["|_ ", "|  ", "   "])).toBe("?");
+  });
+
+  it.each([
+    ["1?0", [Numbers["1"], ["|  ", " | ", "  |"], Numbers["0"]]],
+    ["?23", [["_  ", " _ ", "  _"], Numbers["2"], Numbers["3"]]],
+    ["45?", [Numbers["4"], Numbers["5"], ["_|_", "   ", "|_|"]]],
+  ])(
+    "should parse illegible digits as '?'",
+    (output: string, inputs: AccountNumberInput[]) => {
+      const input = Numbers.concat(inputs);
+      // Numbers.print(input);
+      const parser = new AccountNumberParser();
+      expect(parser.parse(input)).toEqual(output);
     }
   );
 });
