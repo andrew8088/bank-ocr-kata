@@ -3,7 +3,7 @@ import * as R from "ramda";
 import Numbers from "./Numbers";
 
 export default class AccountNumberParser {
-  parse(input: AccountNumberInput): number {
+  parse(input: AccountNumberInput): string {
     const inputDigits = this.separate(input);
     let accountNumber = "";
 
@@ -15,7 +15,7 @@ export default class AccountNumberParser {
       }
     }
 
-    return parseInt(accountNumber, 10);
+    return accountNumber;
   }
 
   separate(input: AccountNumberInput): AccountNumberInput[] {
