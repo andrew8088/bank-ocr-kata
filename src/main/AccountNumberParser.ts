@@ -4,13 +4,18 @@ import Numbers from "./Numbers";
 
 export default class AccountNumberParser {
   parse(input: AccountNumberInput): number {
-    for (let num of Object.keys(Numbers)) {
-      if (R.equals(input, Numbers[num])) {
-        return parseInt(num, 10);
+    const inputDigits = this.separate(input);
+    let accountNumber = "";
+
+    for (const inputDigit of inputDigits) {
+      for (let num of Object.keys(Numbers)) {
+        if (R.equals(inputDigit, Numbers[num])) {
+          accountNumber += num;
+        }
       }
     }
 
-    return 1;
+    return parseInt(accountNumber, 10);
   }
 
   separate(input: AccountNumberInput): AccountNumberInput[] {

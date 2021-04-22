@@ -15,7 +15,7 @@ describe("AccountNumberParser", () => {
     [8, Numbers["8"]],
     [9, Numbers["9"]],
   ])(
-    "should parse in individual %s",
+    "should parse an individual %s",
     (output: number, input: AccountNumberInput) => {
       const parser = new AccountNumberParser();
       expect(parser.parse(input)).toBe(output);
@@ -35,6 +35,45 @@ describe("AccountNumberParser", () => {
       // Numbers.print(input);
       const parser = new AccountNumberParser();
       expect(parser.separate(input)).toEqual(inputs);
+    }
+  );
+
+  it.each([
+    [
+      1234567890,
+      Numbers.concat([
+        Numbers["1"],
+        Numbers["2"],
+        Numbers["3"],
+        Numbers["4"],
+        Numbers["5"],
+        Numbers["6"],
+        Numbers["7"],
+        Numbers["8"],
+        Numbers["9"],
+        Numbers["0"],
+      ]),
+    ],
+    [
+      9087654321,
+      Numbers.concat([
+        Numbers["9"],
+        Numbers["0"],
+        Numbers["8"],
+        Numbers["7"],
+        Numbers["6"],
+        Numbers["5"],
+        Numbers["4"],
+        Numbers["3"],
+        Numbers["2"],
+        Numbers["1"],
+      ]),
+    ],
+  ])(
+    "should parse a nine digit account number (%s))",
+    (output: number, input: AccountNumberInput) => {
+      const parser = new AccountNumberParser();
+      expect(parser.parse(input)).toBe(output);
     }
   );
 });
