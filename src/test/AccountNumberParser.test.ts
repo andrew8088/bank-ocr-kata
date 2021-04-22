@@ -76,4 +76,23 @@ describe("AccountNumberParser", () => {
       expect(parser.parse(input)).toBe(output);
     }
   );
+
+  it('should parse illegible digits as "?"', () => {
+    const parser = new AccountNumberParser();
+    expect(parser.parse(["|_ ", "|  ", "   "])).toBe("?");
+  });
+
+  it.each([
+    ["1?0", [Numbers["1"], ["|  ", " | ", "  |"], Numbers["0"]]],
+    ["?23", [["_  ", " _ ", "  _"], Numbers["2"], Numbers["3"]]],
+    ["45?", [Numbers["4"], Numbers["5"], ["_|_", "   ", "|_|"]]],
+  ])(
+    "should parse illegible digits as '?'",
+    (output: string, inputs: AccountNumberInput[]) => {
+      const input = Numbers.concat(inputs);
+      // Numbers.print(input);
+      const parser = new AccountNumberParser();
+      expect(parser.parse(input)).toEqual(output);
+    }
+  );
 });

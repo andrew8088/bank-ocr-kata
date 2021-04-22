@@ -8,11 +8,11 @@ export default class AccountNumberParser {
     let accountNumber = "";
 
     for (const inputDigit of inputDigits) {
-      for (let num of Object.keys(Numbers)) {
-        if (R.equals(inputDigit, Numbers[num])) {
-          accountNumber += num;
-        }
-      }
+      const num = Object.keys(Numbers).filter((num) =>
+        R.equals(inputDigit, Numbers[num])
+      )[0];
+
+      accountNumber += num || "?";
     }
 
     return accountNumber;
